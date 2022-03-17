@@ -40,7 +40,7 @@ public class NBody {
         int n = Planets.length;
 
         int time = 0;
-        for (int t = 0; t <= T; t++) {
+        for (int t = 0; t <= T; t += dt) {
             double[] xForces = new double[n];
             double[] yForces = new double[n];
 
