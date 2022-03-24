@@ -1,81 +1,94 @@
 public class ArrayDeque<T> {
     private T[] Items, newItems;
     private int capacity = 8;
-    private int first, last;
+    public int first, last;
 
     public ArrayDeque() {
         Items = (T[]) new Object[capacity];
-        this.first = this.last = 0;
-    }
-
-    public ArrayDeque(ArrayDeque other) {
-        capacity = other.size();
-        Items = (T[]) new Object[capacity];
-        for (int i = other.first; i <= other.last; i++){
-            this.Items[i] = (T) other.get(i);
-        }
+        first = 0;
+        last = 0;
     }
 
     public void addFirst(T item) {
-        if (isFull()) {
-            resize(Items);
+        if(isfull()) {
+            resize(capacity * 2);
+        } else {
+            first = (first - 1 + capacity) % capacity;
+            Items[first] = item;
         }
-        for (int i = last; i <= first; i--) {
-            Items[i + 1] = Items[i];
-        }
-        Items[first] = item;
-        last ++;
     }
 
     public void addLast(T item) {
-        if (isFull()) {
-            resize(Items);
+        if(isfull()) {
+            resize(capacity * 2);
         }
-        Items[last + 1] = item;
-        last ++;
+        Items[last] = item;
+        last = (last + 1 + capacity) % capacity;
     }
 
-    public void removeFirst(T item) {
-        for (int i = first + 1; i <= last; i++) {
-            Items[i - 1] = Items[i];
-        }
-        if(isTooBig()) {
-            downsize(Items);
-        }
+    public T removeFirst() {
+        first = (first + 1 + capacity) % capacity;
+        return Items[(first - 1 + capacity) % capacity];
     }
 
-    public T get(int i) {
-        if (i > last) {
-            return null;
+    public T removeLast() {
+        last = (last - 1 + capacity) % capacity;
+        return Items[(last + 1 + capacity) % capacity];
+    }
+
+    public T get(int index) {
+        return Items[(first + index +capacity) % capacity];
+    }
+    public void printDeque() {
+        if (first < last) {
+            for (int i = first; i < last; i++){
+                System.out.println(Items[i] + " ");
+            }
         } else {
-            return Items[i];
+            for (int i = first; i < capacity; i++){
+                System.out.println(Items[i] + " ");
+            }
+
+            for (int i = 0; i < last; i++) {
+                System.out.println(Items[i] + " ");
+            }
         }
+    }
+
+    public boolean isEmpty() {
+        return first == last;
+    }
+
+    private boolean isfull() {
+        return size() == capacity - 1;
     }
 
     public int size() {
-        return last + 1;
+        return (last - first + capacity) % capacity;
     }
 
-    private boolean isFull() {
-        return last == capacity - 1;
-    }
+    public void resize(int newCapacity) {
+        newItems = (T[]) new Object[newCapacity];
+        int size = size();
+        if (first < last) {
+            int j = 0;
+            for(int i = first; i < last; i++, j++) {
+                newItems[j] = Items[i];
+            }
+        } else {
+            int j = 0;
+            for(int i = first; i < capacity; i++, j++) {
+                newItems[j] = Items[i];
+            }
+            for(int i = 0; i < last; i++, j++) {
+                newItems[j] = Items[i];
+            }
+        }
 
-    private void resize(T[] Items) {
-        newItems = (T[]) new Object[capacity * 4];
-        System.arraycopy(Items, 0, newItems, 0, last - first + 1);
-        this.Items = newItems;
-        this.capacity *= 4;
-    }
-
-    private boolean isTooBig() {
-        return last / capacity < 0.25;
-    }
-
-    private void downsize(T[] Items) {
-        newItems = (T[]) new Object[capacity / 4];
-        System.arraycopy(Items, 0, newItems, 0, last - first + 1);
-        this.Items = newItems;
-        this.capacity /= 4;
+        Items = newItems;
+        capacity = newCapacity;
+        first = 0;
+        last = size;
     }
 
 }
