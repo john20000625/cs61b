@@ -1,7 +1,7 @@
 public class ArrayDeque<T> {
     private T[] Items, newItems;
     private int capacity = 8;
-    public int first, last;
+    private int first, last;
 
     public ArrayDeque() {
         Items = (T[]) new Object[capacity];
@@ -27,13 +27,32 @@ public class ArrayDeque<T> {
     }
 
     public T removeFirst() {
-        first = (first + 1 + capacity) % capacity;
-        return Items[(first - 1 + capacity) % capacity];
+        if(isEmpty()) {
+            return null;
+        } else {
+            first = (first + 1 + capacity) % capacity;
+            if (size() == 0) {
+                return null;
+            } else if(isTooBig()){
+                resize(capacity / 4);
+            }
+            return Items[first];
+        }
+
     }
 
     public T removeLast() {
-        last = (last - 1 + capacity) % capacity;
-        return Items[(last + 1 + capacity) % capacity];
+        if(isEmpty()) {
+            return null;
+        } else {
+            last = (last - 1 + capacity) % capacity;
+            if (size() == 0) {
+                return null;
+            } else if(isTooBig()){
+                resize(capacity / 4);
+            }
+                return Items[last];
+            }
     }
 
     public T get(int index) {
@@ -63,11 +82,16 @@ public class ArrayDeque<T> {
         return size() == capacity - 1;
     }
 
+    private boolean isTooBig() {
+        return size() < capacity / 4;
+    }
+
     public int size() {
         return (last - first + capacity) % capacity;
     }
 
-    public void resize(int newCapacity) {
+
+    private void resize(int newCapacity) {
         newItems = (T[]) new Object[newCapacity];
         int size = size();
         if (first < last) {
