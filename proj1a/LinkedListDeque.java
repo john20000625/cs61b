@@ -1,11 +1,9 @@
-import java.util.ArrayDeque;
-
 public class LinkedListDeque<T> {
     public class Node {
-        public Node prev;
-        public T value;
-        public Node next;
-        private Node(T value, Node prev, Node next) {
+        private Node prev;
+        private T value;
+        private Node next;
+        private Node (T value, Node prev, Node next) {
             this.prev = prev;
             this.value = value;
             this.next = next;
@@ -55,15 +53,18 @@ public class LinkedListDeque<T> {
     public void printDeque() {
         Node p = sentinel;
         while (p != sentinel) {
-            System.out.println(p.value);
-            System.out.println(' ');
-            p = p.next;
+            if (p.next == sentinel) {
+                System.out.println(p.value);
+                break;
+            } else {
+                System.out.println(p.value + " ");
+                p = p.next;
+            }
         }
-        System.out.println('\n');
     }
 
     public T removeFirst() {
-        if (isEmpty() || size == 1) {
+        if (isEmpty()) {
             return null;
         } else {
             sentinel.next = sentinel.next.next;
@@ -113,7 +114,7 @@ public class LinkedListDeque<T> {
         }
     }
 
-    public T getRecursive(int index, LinkedListDeque<T>.Node p) {
+    private T getRecursive(int index, LinkedListDeque<T>.Node p) {
         if (index == 0) {
             return p.value;
         } else {
