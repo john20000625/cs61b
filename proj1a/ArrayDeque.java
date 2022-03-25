@@ -12,10 +12,10 @@ public class ArrayDeque<T> {
     public void addFirst(T item) {
         if (isfull()) {
             resize(capacity * 2);
-        } else {
-            first = (first - 1 + capacity) % capacity;
-            items[first] = item;
         }
+        first = (first - 1 + capacity) % capacity;
+        items[first] = item;
+
     }
 
     public void addLast(T item) {
@@ -51,24 +51,27 @@ public class ArrayDeque<T> {
             } else if (isTooBig()) {
                 resize(capacity / 4);
             }
-                return items[last];
-            }
+            return items[last];
+        }
     }
 
     public T get(int index) {
-        return items[(first + index +capacity) % capacity];
+        return items[(first + index + capacity) % capacity];
     }
     public void printDeque() {
         if (first < last) {
-            for (int i = first; i < last; i++){
+            for (int i = first; i < last; i++) {
                 System.out.println(items[i] + " ");
             }
         } else {
             for (int i = first; i < capacity; i++) {
                 System.out.println(items[i] + " ");
             }
-
             for (int i = 0; i < last; i++) {
+                if (i == last - 1) {
+                    System.out.println(items[i]);
+                    break;
+                }
                 System.out.println(items[i] + " ");
             }
         }
@@ -113,5 +116,4 @@ public class ArrayDeque<T> {
         first = 0;
         last = size;
     }
-
 }
