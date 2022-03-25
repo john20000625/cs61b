@@ -78,7 +78,7 @@ public class LinkedListDequeTest {
 //		lld1.addFirst(6);
 //		lld1.addLast(6);
 //		lld1.removeFirst();
-		int a = lld1.removeLast();
+		int a = lld1.getRecursive(0);
 		System.out.println(a);
 		/*
 		LinkedListDeque<Integer> lld1 = new LinkedListDeque<Integer>();

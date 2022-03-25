@@ -34,6 +34,7 @@ public class ArrayDeque<T> {
             if (isTooBig()) {
                 resize(capacity / 4);
             }
+            first = (first + 1 + capacity) % capacity;
             return res;
         }
 
@@ -47,6 +48,7 @@ public class ArrayDeque<T> {
             if (isTooBig()) {
                 resize(capacity / 4);
             }
+            last = (last - 1 + capacity) % capacity;
             return res;
         }
     }
