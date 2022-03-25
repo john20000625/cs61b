@@ -30,13 +30,11 @@ public class ArrayDeque<T> {
         if (isEmpty()) {
             return null;
         } else {
-            first = (first + 1 + capacity) % capacity;
-            if (size() == 0) {
-                return null;
-            } else if (isTooBig()) {
+            T res = items[first];
+            if (isTooBig()) {
                 resize(capacity / 4);
             }
-            return items[first];
+            return res;
         }
 
     }
@@ -45,13 +43,11 @@ public class ArrayDeque<T> {
         if (isEmpty()) {
             return null;
         } else {
-            last = (last - 1 + capacity) % capacity;
-            if (size() == 0) {
-                return null;
-            } else if (isTooBig()) {
+            T res = items[(last - 1 + capacity) % capacity];
+            if (isTooBig()) {
                 resize(capacity / 4);
             }
-            return items[last];
+            return res;
         }
     }
 

@@ -70,16 +70,16 @@ public class LinkedListDequeTest {
 //				" (and delete this print statement).");
 		LinkedListDeque<Integer> lld1 = new LinkedListDeque<Integer>();
 		lld1.addFirst(0);
-		lld1.addFirst(1);
-		lld1.addFirst(2);
-		lld1.addFirst(3);
-		lld1.addFirst(4);
-		lld1.isEmpty();
-		lld1.addFirst(6);
-		lld1.addLast(6);
-		lld1.removeFirst();
-		lld1.removeLast();
-		System.out.println(lld1.getRecursive(1));
+//		lld1.addFirst(1);
+//		lld1.addFirst(2);
+//		lld1.addFirst(3);
+//		lld1.addFirst(4);
+//		lld1.isEmpty();
+//		lld1.addFirst(6);
+//		lld1.addLast(6);
+//		lld1.removeFirst();
+		int a = lld1.removeLast();
+		System.out.println(a);
 		/*
 		LinkedListDeque<Integer> lld1 = new LinkedListDeque<Integer>();
 		// should be empty 
